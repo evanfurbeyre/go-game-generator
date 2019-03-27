@@ -31,7 +31,7 @@ const cellData = [
 const fetchGame = () => {
   axios({
     method: 'GET',
-    url: 'http://localhost:3000/',
+    url: 'http://localhost:3000/board',
   }).then((data) => {
     console.log(data);
   });
