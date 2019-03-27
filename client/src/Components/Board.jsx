@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core';
 import axios from 'axios';
 import Cell from './Cell';
-
 
 const styles = () => ({
   board: {
@@ -13,41 +12,39 @@ const styles = () => ({
     backgroundColor: 'tan',
     borderRadius: '6px',
   },
-})
+});
 
-const cellData = [
-  [0,1,0,0,0,0,0,0,0],
-  [0,-1,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0],
-];
-
-const fetchGame = () => {
-  axios({
-    method: 'GET',
-    url: 'http://localhost:3000/board',
-  }).then((data) => {
-    console.log(data);
-  });
-};
-
+const defaultArray = Array(9).fill().map(() => Array(9).fill(0));
 
 function Board({ classes, width }) {
+  const [cellData, setCellData] = useState(defaultArray);
+
+  useEffect(() => {
+    fetchGame();
+  }, []);
+
+  const fetchGame = () => {
+    axios({
+      method: 'GET',
+      url: 'http://localhost:3000/board',
+    }).then(({ data }) => {
+      console.log('data:', data);
+      setCellData(data);
+    });
+  };
 
   return (
     <div className={classes.board}>
       {
         cellData.map((row, i) => row.map((stone, j) => {
-          return <Cell key={`${i}_${j}`} stone={stone}/>
+          return (
+            <Cell
+              key={`${i}_${j}`}
+              stone={stone}
+            />
+          );
         }))
       }
-      <button onClick={fetchGame}>fetch!</button>
     </div>
   )
 }
