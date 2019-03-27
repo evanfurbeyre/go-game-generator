@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles, Grid } from '@material-ui/core';
 import Board  from './Components/Board';
 import Controls  from './Components/Controls';
+import { Provider } from './Context';
 
 const BOARD_WIDTH = '500px';
 
@@ -20,23 +21,24 @@ const styles = () => ({
   },
   centerCol: {
     width: BOARD_WIDTH,
-  }
+  },
 })
 
 function App ({ classes }) {
   return (
-    <Grid container justify="center" alignItems="center" className={classes.background}>
-      <Grid container justify="center" direction="column" className={classes.centerCol}>
-        <div className={classes.boardContainer}>
-          <Board />
-        </div>
-        <div className={classes.controlsContainer}>
-          <Controls />
-        </div>
+    <Provider>
+      <Grid container justify="center" alignItems="center" className={classes.background}>
+        <Grid container justify="center" direction="column" className={classes.centerCol}>
+          <div className={classes.boardContainer}>
+            <Board />
+          </div>
+          <div className={classes.controlsContainer}>
+            <Controls />
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
+    </Provider>
   );
 };
-
 
 export default withStyles(styles)(App);

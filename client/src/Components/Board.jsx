@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withStyles } from '@material-ui/core';
 import axios from 'axios';
+import { Context } from '../Context';
 import Cell from './Cell';
 
 const styles = () => ({
@@ -18,6 +19,9 @@ const defaultArray = Array(9).fill().map(() => Array(9).fill(0));
 
 function Board({ classes, width }) {
   const [cellData, setCellData] = useState(defaultArray);
+  const { state, dispatch } = useContext(Context);
+  console.log('state.turn:', state.turn);
+
 
   useEffect(() => {
     fetchGame();
