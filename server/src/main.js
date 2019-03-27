@@ -12,7 +12,7 @@ app.use(function(req, res, next) {
    console.log();
    console.log(req.path);
    console.log("Starting express chain");
-   next();
+   next(); 
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
