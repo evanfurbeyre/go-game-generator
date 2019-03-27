@@ -86,3 +86,5 @@ typings/
 /client/yarn-error.log*
 
 /.idea
+/server/package-lock.json
+/client/package-lock.json
