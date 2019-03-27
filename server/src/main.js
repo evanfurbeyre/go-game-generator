@@ -21,7 +21,7 @@ app.use(function(req, res, next) {
    console.log("\n" + req.method + " " + req.path);
    console.log("query:   " + JSON.stringify(req.query));
    console.log("params:  " + JSON.stringify(req.params));
-   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+   res.header("Access-Control-Allow-Origin", "http://localhost:3001");
    res.header("Access-Control-Allow-Credentials", true);
    res.header("Access-Control-Allow-Headers", "Content-Type");
    next();

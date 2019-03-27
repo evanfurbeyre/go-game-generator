@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
+import axios from 'axios';
 import Cell from './Cell';
 
 
@@ -25,7 +26,16 @@ const cellData = [
   [0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0],
-]
+];
+
+const fetchGame = () => {
+  axios({
+    method: 'GET',
+    url: 'http://localhost:3000/',
+  }).then((data) => {
+    console.log(data);
+  });
+};
 
 
 function Board({ classes, width }) {
@@ -37,6 +47,7 @@ function Board({ classes, width }) {
           return <Cell key={`${i}_${j}`} stone={stone}/>
         }))
       }
+      <button onClick={fetchGame}>fetch!</button>
     </div>
   )
 }
