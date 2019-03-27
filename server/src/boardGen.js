@@ -12,6 +12,5 @@ let genBoard = function(size) {
    return board;
 }
 
-module.export genBoard(9);
-
+module.exports = genBoard;
 
