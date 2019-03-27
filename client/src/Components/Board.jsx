@@ -1,12 +1,16 @@
 import React from 'react';
-import { Grid, withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import Cell from './Cell';
+
 
 const styles = () => ({
   board: {
     display: 'grid',
+    width: '100%',
+    height: '100%',
     gridTemplateColumns: 'repeat(9, 1fr)',
-    border: '2px solid #222',
+    backgroundColor: 'tan',
+    borderRadius: '6px',
   },
 })
 
@@ -24,16 +28,16 @@ const cellData = [
 ]
 
 
-function Board({ classes }) {
+function Board({ classes, width }) {
 
   return (
-    <Grid className={classes.board}>
+    <div className={classes.board}>
       {
-        cellData.map((row) => row.map((stone) => {
-          return <Cell stone={stone}/>
+        cellData.map((row, i) => row.map((stone, j) => {
+          return <Cell key={`${i}_${j}`} stone={stone}/>
         }))
       }
-    </Grid>
+    </div>
   )
 }
 

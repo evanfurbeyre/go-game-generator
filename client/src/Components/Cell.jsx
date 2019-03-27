@@ -2,25 +2,21 @@ import React from 'react';
 import { Grid, withStyles } from '@material-ui/core';
 import Stone from './Stone';
 
-const CELL_WIDTH = '40px';
 const LINE_WIDTH = '2px';
 
 const styles = () => ({
   cell: {
-    backgroundColor: 'tan',
-    height: CELL_WIDTH,
-    width: CELL_WIDTH,
     position: 'relative',
   },
   vDiv: {
     position: 'absolute',
     width: LINE_WIDTH,
-    height: CELL_WIDTH,
+    height: '100%',
     backgroundColor: '#222',
   },
   hDiv: {
     position: 'absolute',
-    width: CELL_WIDTH,
+    width: '100%',
     height: LINE_WIDTH,
     backgroundColor: '#222',
   },

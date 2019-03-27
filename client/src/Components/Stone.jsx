@@ -3,9 +3,9 @@ import { withStyles } from '@material-ui/core';
 
 const styles = () => ({
   stone: {
-    width: '36px',
-    height: '36px',
-    borderRadius: '18px',
+    width: '44px',
+    height: '44px',
+    borderRadius: '22px',
     position: 'absolute',
   },
   black: {
