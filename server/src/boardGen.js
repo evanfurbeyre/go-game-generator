@@ -9,8 +9,9 @@ let genBoard = function(size) {
    }
 
    console.log(board);
+   return board;
 }
 
-genBoard(9);
+module.export genBoard(9);
 
 
