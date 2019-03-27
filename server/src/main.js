@@ -3,7 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var boardGen = require('./boardGen.js');
+var genBoard = require('./boardGen.js');
 
 const defaultPort = 3000;
 const boardSize = 9;
@@ -32,8 +32,7 @@ app.use(function(req, res, next) {
 
 app.get('/', function(req, res) {
    console.log("At root endpoint");
-   let board = genBoard(boardSize);
-   res.status(200).json(board);
+   res.status(200);
    res.end();
 });
 
@@ -44,13 +43,11 @@ app.get('/board', function(req, res) {
    res.end();
 });
 
-/*
 app.use(cors({
    exposedHeaders: ["Location"],
    credentials: true,
    origin: true
 }));
-*/
 
 /*
 app.use(express.static(path.join(__dirname, 'public')));
