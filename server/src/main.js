@@ -2,9 +2,11 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var router = express.Router({caseSensitive: true});
+
+var boardGen = require('./boardGen.js');
 
 const defaultPort = 3000;
+const boardSize = 9;
 
 var app = express();
 
@@ -29,8 +31,16 @@ app.use(function(req, res, next) {
 
 
 app.get('/', function(req, res) {
-   console.log("At endpoint");
-   res.status(200);
+   console.log("At root endpoint");
+   let board = genBoard(boardSize);
+   res.status(200).json(board);
+   res.end();
+});
+
+app.get('/board', function(req, res) {
+   console.log("At board endpoint");
+   let board = genBoard(boardSize);
+   res.status(200).json(board);
    res.end();
 });
 
