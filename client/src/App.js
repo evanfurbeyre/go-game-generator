@@ -1,28 +1,21 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { withStyles, Grid } from '@material-ui/core';
+import Board  from './Components/Board';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const styles = () => ({
+  app: {
+    width: '100vw',
+    height: '100vh',
+  },
+})
 
-export default App;
+function App ({ classes }) {
+  return (
+    <Grid container justify="center" alignItems="center" className={classes.app}>
+      <Board />
+    </Grid>
+  );
+};
+
+
+export default withStyles(styles)(App);
