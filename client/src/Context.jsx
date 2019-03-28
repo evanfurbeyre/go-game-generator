@@ -1,13 +1,23 @@
 import React, { useReducer } from "react";
 
+// Constants
 const BLK = 'B';
 const WHT = 'W';
 
+// Initial State
+const emptyBoard = () => Array(9).fill().map(() => Array(9).fill(0));
+const initialState = {
+  turn: BLK,
+  currentBoard: emptyBoard(),
+};
+
 const reducer = (state, action) => {
+  let turn, currentBoard;
   switch (action.type) {
+    // Make a move
     case 'MOVE':
       const { row, col } = action.payload;
-      let { currentBoard, turn } = state;
+      ({ currentBoard, turn } = state);
 
       // Set the clicked cell to black or white
       if (currentBoard[row][col] === 0) {
@@ -15,29 +25,27 @@ const reducer = (state, action) => {
         turn = turn === BLK ? WHT : BLK;
       }
 
-      return {
-        ...state,
-        currentBoard,
-        turn,
-      };
-    case 'SET_BOARD':
-      let { board } = action.payload;
+      return { ...state, currentBoard, turn };
 
-      return {
-        ...state,
-        currentBoard: board,
-        prevBoards: [...state.prevBoards, board],
-      }
+    // Set the board
+    case 'SET_BOARD':
+      ({ board: currentBoard } = action.payload);
+      return { ...state, currentBoard };
+
+    // Reset the board
+    case 'CLEAR':
+      return { ...state, currentBoard: emptyBoard() };
+
+    // TODO: ...
+    case 'UNDO':
+      return { ...state };
+    case 'REDO':
+      return { ...state };
+    case 'FETCH':
+      return { ...state };
     default:
       throw new Error('hit default resolver...');
   }
-};
-
-const emptyBoard = Array(9).fill().map(() => Array(9).fill(0));
-const initialState = {
-  turn: BLK,
-  currentBoard: emptyBoard,
-  prevBoards: [],
 };
 
 const Context = React.createContext(initialState);

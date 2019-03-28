@@ -17,7 +17,7 @@ const styles = () => ({
 
 function Board({ classes, width }) {
   const { state, dispatch } = useContext(Context);
-  
+
   useEffect(() => {
     fetchGame();
   }, []);
