@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Grid, withStyles } from '@material-ui/core';
 import Stone from './Stone';
+import { Context } from '../Context';
 
 const LINE_WIDTH = '2px';
 
@@ -22,13 +23,32 @@ const styles = () => ({
   },
 })
 
-function Cell({ classes, stone }) {
+function Cell({ classes, stone, row, col }) {
+  const { dispatch } = useContext(Context);
+
+  // Make a move
+  const handleClick = () => {
+    dispatch({
+      type: 'MOVE',
+      payload: {
+        row,
+        col,
+      },
+    });
+  }
+
   return (
-    <Grid container justify="center" alignItems="center" className={classes.cell}>
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      className={classes.cell}
+      onClick={handleClick}
+    >
       <div className={classes.vDiv}/>
       <div className={classes.hDiv}/>
-      { stone === 1 && <Stone black /> }
-      {stone === -1 && <Stone white /> }
+      { stone === 'B' && <Stone black /> }
+      { stone === 'W' && <Stone white /> }
     </Grid>
   )
 }

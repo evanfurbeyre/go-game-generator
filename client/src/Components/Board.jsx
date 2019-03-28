@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { withStyles } from '@material-ui/core';
 import axios from 'axios';
-import { Context } from '../Context';
 import Cell from './Cell';
+import { Context } from '../Context';
 
 const styles = () => ({
   board: {
@@ -15,14 +15,9 @@ const styles = () => ({
   },
 });
 
-const defaultArray = Array(9).fill().map(() => Array(9).fill(0));
-
 function Board({ classes, width }) {
-  const [cellData, setCellData] = useState(defaultArray);
   const { state, dispatch } = useContext(Context);
-  console.log('state.turn:', state.turn);
-
-
+  
   useEffect(() => {
     fetchGame();
   }, []);
@@ -32,23 +27,25 @@ function Board({ classes, width }) {
       method: 'GET',
       url: 'http://localhost:3000/board',
     }).then(({ data }) => {
-      console.log('data:', data);
-      setCellData(data);
+      dispatch({
+        type: 'SET_BOARD',
+        payload: {
+          board: data,
+        },
+      });
     });
   };
 
   return (
     <div className={classes.board}>
-      {
-        cellData.map((row, i) => row.map((stone, j) => {
-          return (
-            <Cell
-              key={`${i}_${j}`}
-              stone={stone}
-            />
-          );
-        }))
-      }
+      { state.currentBoard.map((row, i) => row.map((stone, j) => (
+        <Cell
+          key={`${i}_${j}`}
+          row={i}
+          col={j}
+          stone={stone}
+        />
+      )))}
     </div>
   )
 }

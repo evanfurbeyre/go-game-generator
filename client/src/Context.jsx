@@ -1,21 +1,43 @@
 import React, { useReducer } from "react";
 
+const BLK = 'B';
+const WHT = 'W';
+
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'move':
+    case 'MOVE':
+      const { row, col } = action.payload;
+      let { currentBoard, turn } = state;
+
+      // Set the clicked cell to black or white
+      if (currentBoard[row][col] === 0) {
+        currentBoard[row][col] = turn === BLK ? BLK : WHT;
+        turn = turn === BLK ? WHT : BLK;
+      }
+
       return {
         ...state,
-        turn: state.turn ? 0 : 1, // 0 = black, 1 = white
+        currentBoard,
+        turn,
       };
+    case 'SET_BOARD':
+      let { board } = action.payload;
+
+      return {
+        ...state,
+        currentBoard: board,
+        prevBoards: [...state.prevBoards, board],
+      }
     default:
-      return;
+      throw new Error('hit default resolver...');
   }
 };
 
+const emptyBoard = Array(9).fill().map(() => Array(9).fill(0));
 const initialState = {
-  turn: 0,
-  currentBoard: null,
-  prevBoards: null,
+  turn: BLK,
+  currentBoard: emptyBoard,
+  prevBoards: [],
 };
 
 const Context = React.createContext(initialState);
