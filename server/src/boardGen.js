@@ -7,8 +7,9 @@ let genBoard = function(size) {
    for(let i=0; i<size; i++) {
       board.push(new Array(size).fill(0));
    }
+   board[2][3] = 'B';
+   board[3][3] = 'W';
 
-   console.log(board);
    return board;
 }
 
