@@ -16,7 +16,8 @@ const styles = () => ({
 });
 
 function Board({ classes, width }) {
-  const { state, dispatch } = useContext(Context);
+  const { state: {boardFrames, frameIdx }, dispatch } = useContext(Context);
+  const board = boardFrames[frameIdx];
 
   useEffect(() => {
     fetchGame();
@@ -38,7 +39,7 @@ function Board({ classes, width }) {
 
   return (
     <div className={classes.board}>
-      { state.currentBoard.map((row, i) => row.map((stone, j) => (
+      { board.map((row, i) => row.map((stone, j) => (
         <Cell
           key={`${i}_${j}`}
           row={i}

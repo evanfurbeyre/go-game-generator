@@ -8,39 +8,53 @@ const WHT = 'W';
 const emptyBoard = () => Array(9).fill().map(() => Array(9).fill(0));
 const initialState = {
   turn: BLK,
-  currentBoard: emptyBoard(),
+  frameIdx: 0,
+  boardFrames: [emptyBoard()],
 };
 
 const reducer = (state, action) => {
-  let turn, currentBoard;
+  let { turn, boardFrames, frameIdx }= state;
+  let board, row, col;
+  if (action.payload) {
+     ({ board, row, col } = action.payload);
+  }
+
   switch (action.type) {
     // Make a move
     case 'MOVE':
-      const { row, col } = action.payload;
-      ({ currentBoard, turn } = state);
+      // Copy current(aka previous board) to new frame, update frame ptr
+      boardFrames.push(
+        JSON.parse(JSON.stringify(boardFrames[frameIdx]))
+      );
+      frameIdx += 1;
 
       // Set the clicked cell to black or white
-      if (currentBoard[row][col] === 0) {
-        currentBoard[row][col] = turn === BLK ? BLK : WHT;
+      if (boardFrames[frameIdx][row][col] === 0) {
+        boardFrames[frameIdx][row][col] = turn === BLK ? BLK : WHT;
         turn = turn === BLK ? WHT : BLK;
       }
 
-      return { ...state, currentBoard, turn };
+      return { ...state, boardFrames, frameIdx, turn };
 
     // Set the board
     case 'SET_BOARD':
-      ({ board: currentBoard } = action.payload);
-      return { ...state, currentBoard };
+      return { ...state, boardFrames: [board] };
 
     // Reset the board
     case 'CLEAR':
-      return { ...state, currentBoard: emptyBoard() };
+      return { ...state, boardFrames: [emptyBoard()], frameIdx: 0 };
 
-    // TODO: ...
+    // Back a move
     case 'UNDO':
-      return { ...state };
+      if (frameIdx > 0) frameIdx -= 1;
+      return { ...state, frameIdx };
+
+    // Forward a move
     case 'REDO':
-      return { ...state };
+      if (frameIdx < boardFrames.length - 1) frameIdx += 1;
+      return { ...state, frameIdx };
+
+    // TODO
     case 'FETCH':
       return { ...state };
     default:
