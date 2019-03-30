@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import updateBoard from './updateBoard';
 
 // Constants
 const BLK = 'B';
@@ -27,10 +28,12 @@ const reducer = (state, action) => {
         JSON.parse(JSON.stringify(boardFrames[frameIdx]))
       );
       frameIdx += 1;
-
+      
       // Set the clicked cell to black or white
       if (boardFrames[frameIdx][row][col] === 0) {
         boardFrames[frameIdx][row][col] = turn === BLK ? BLK : WHT;
+        updateBoard(boardFrames[frameIdx], turn);
+
         turn = turn === BLK ? WHT : BLK;
       }
 
